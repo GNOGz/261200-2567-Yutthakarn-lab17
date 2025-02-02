@@ -25,3 +25,7 @@ Ensure you have the following installed:
 To start the development server, run:
 ```sh
 npm run dev
+```
+
+You should see something like this
+![alt text](https://github.com/261200-2567-2/261200-2567-2-lab17/blob/main/frontend/public/screenshot.JPG)
