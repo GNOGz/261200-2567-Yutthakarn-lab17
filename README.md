@@ -25,5 +25,3 @@ Ensure you have the following installed:
 To start the development server, run:
 ```sh
 npm run dev
-
-![screenshot](frontend/public/screenshot.JPG)
