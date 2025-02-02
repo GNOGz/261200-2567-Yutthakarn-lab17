@@ -1,24 +1,35 @@
-"use client";
+'use client'
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Stomp from "stompjs";
 import { useWebSocket } from "@/hooks/useWebsocket";
 import { setUser } from "@/stores/slices/userSlice";
 import { MessageType } from "@/types/message_type";
-import { redirect } from "next/navigation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import Stomp from "stompjs";
+import { useRouter } from "next/navigation";
 
 const JoinPage: React.FC = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
-  const {sendMessage , subscribe } = useWebSocket()
+  const { sendMessage, subscribe, unsubscribe } = useWebSocket();
+  const [userSubscription, setUserSubscription] = useState<Stomp.Subscription>();
   const [username, setUsername] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const onUserConnected = (payload: Stomp.Message) => {
+  const onUserConnected = (payload: Stomp.Message) =>  {
     const userObject = JSON.parse(payload.body);
     console.log("Receive new message user object", userObject);
     dispatch(setUser(userObject));
-    redirect("/chatroom");
+    router.push("/chatroom");
   };
+
+  useEffect(() => {
+    setUserSubscription(userSubscription);
+    return(()=>{
+      if(userSubscription){
+        unsubscribe(userSubscription)
+      }
+    })
+  }, [userSubscription]);
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +38,12 @@ const JoinPage: React.FC = () => {
     } else {
       setError("");
       try {
-        subscribe(`/user/queue/connected`, onUserConnected);
+        const subscription = subscribe(`/user/queue/connected`, onUserConnected);
+        setUserSubscription(subscription);
         sendMessage(`/chat/addUser`, {
-            sender: username,
-            message: `${username} has joined the chat.`,
-            type: MessageType.JOIN,
+          sender: username,
+          message: `${username} has joined the chat.`,
+          type: MessageType.JOIN,
         });
       } catch (error) {
         setError("Join failed. Please try again.");
@@ -45,6 +57,9 @@ const JoinPage: React.FC = () => {
         <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-6">
           Welcome Back
         </h2>
+        <h6 className="text-xl text-center text-gray-500 mb-6">
+          Current user:  <span className="font-semibold">{/*fill current user number*/}</span>
+        </h6>
         <p className="text-center text-gray-500 mb-6">
           Please enter your username to continue
         </p>

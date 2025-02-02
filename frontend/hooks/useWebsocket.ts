@@ -16,13 +16,23 @@ export const useWebSocket = () => {
 
   const subscribe = (destination: string, callback: (payload: Stomp.Message) => void) => { 
     if (client && isConnected) {
-      client.subscribe(destination, callback);
+      const subscription = client.subscribe(destination, callback);
       console.log(`Subscribed to ${destination}`);
+      return subscription;
+    } else {
+      console.log("No active WebSocket connection to disconnect.");
+    }
+  } 
+
+  const unsubscribe = (subscription: Stomp.Subscription| undefined) => { 
+    if (client && isConnected && subscription) {
+      client.unsubscribe(subscription.id);
+      console.log(`Unsubscribed from ${subscription.id}`);
     } else {
       console.log("No active WebSocket connection to disconnect.");
     }
   }
-
+  
   const sendMessage = (destination: string, message: any) => {
     if (client && isConnected) {
       console.log("send", JSON.stringify(message));
@@ -73,5 +83,6 @@ export const useWebSocket = () => {
     disconnect,
     sendMessage,
     subscribe,
+    unsubscribe,
   };
 };
