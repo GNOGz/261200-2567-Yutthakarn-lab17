@@ -5,24 +5,29 @@
 ### Prerequisites
 
 Ensure you have the following installed:
+
 - Node.js
 - npm (Node Package Manager)
 
 ### Installation
 
-1. Install the necessary dependencies:
-    ```sh
-    npm install
-    ```
+1. go to frontend directory
+   ```sh
+   cd frontend
+   ```
+2. Install the necessary dependencies:
 
-2. Create a `.env` file in the frontend directory and add the following line:
-    ```env
-    API_BASE_URL=http://localhost:8080
-    ```
+   ```sh
+   npm install
+   ```
+
+3. Create a `.env` file in the frontend directory and add the following line:
+   ```env
+   API_BASE_URL=http://localhost:8080
+   ```
 
 ### Running the Development Server
 
-To start the development server, run:
 ```sh
 npm run dev
 ```
