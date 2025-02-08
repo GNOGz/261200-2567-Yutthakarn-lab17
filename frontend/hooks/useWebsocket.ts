@@ -8,6 +8,7 @@ import {
 } from "@/stores/slices/webSocketSlice";
 import { useAppSelector } from "@/stores/hook";
 import { addMessageToRoom } from "@/stores/slices/roomSlice";
+import { setUserNumber } from "@/stores/slices/userNumberSlice";
 
 export const useWebSocket = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export const useWebSocket = () => {
       const stompClient = Stomp.over(webSocket);
       stompClient.connect({}, () => onConnected(stompClient));
       stompClient.debug = () => {};
+
     } catch (e) {
       console.log(e);
     }
@@ -67,11 +69,18 @@ export const useWebSocket = () => {
 
   const onConnected = (stompClient: Stomp.Client) => {
     stompClient.subscribe(`/topic/messages`, onUpdateRoom);
+    stompClient.subscribe(`/topic/chatNumber`,onUpdateUserNumber);
+
     dispatch(setWebSocketClient(stompClient));
     dispatch(setConnectionStatus(true));
     console.log("WebSocket connected successfully"); 
   };
 
+  const onUpdateUserNumber = (payload:Stomp.Message) =>{
+    const newMessageObject = JSON.parse(payload.body);
+    dispatch(setUserNumber(newMessageObject));
+    console.log(`a user just join chat XD`,newMessageObject);
+  }
   const onUpdateRoom = (payload: Stomp.Message) => {
     const newMessageObject = JSON.parse(payload.body);
     dispatch(addMessageToRoom(newMessageObject));
@@ -84,5 +93,6 @@ export const useWebSocket = () => {
     sendMessage,
     subscribe,
     unsubscribe,
+    
   };
 };
