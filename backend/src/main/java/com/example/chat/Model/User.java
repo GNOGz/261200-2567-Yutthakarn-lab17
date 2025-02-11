@@ -1,11 +1,9 @@
-package com.example.chat.models;
-
+package lab17.chatappwebsocket.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-@Getter
 @AllArgsConstructor
+@Getter
 public class User {
     private String username;
 }

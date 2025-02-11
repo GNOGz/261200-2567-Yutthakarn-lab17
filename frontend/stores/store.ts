@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice"; // Correct import for the user slice reducer
 import webSocketReducer from "./slices/webSocketSlice"; // Correct import for the user slice reducer
 import roomReducer from "./slices/roomSlice"; // Correct import for the user slice reducer
+import userNumberReducer from "./slices/userNumberSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     room: roomReducer,
+    userNumber:userNumberReducer,
     websocket: webSocketReducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,5 +1,4 @@
-package com.example.chat.models;
-
+package lab17.chatappwebsocket.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,7 @@ public class ChatMessage {
     private MessageType type;
     private LocalDateTime timestamp;
 
-    public static ChatMessage buildChatmessage(String message , String sender , MessageType messageType){
+    public static ChatMessage buildChatMessage(String message , String sender , MessageType messageType){
         return new ChatMessage(message,sender,messageType , LocalDateTime.now());
     }
 }

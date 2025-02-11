@@ -1,4 +1,4 @@
-package com.example.chat.models;
+package lab17.chatappwebsocket.Model;
 
 public enum MessageType {
     CHAT,

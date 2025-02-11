@@ -9,6 +9,7 @@ const initialState: { room: Room } = {
   },
 };
 
+
 const roomSlice = createSlice({
   name: "room",
   initialState,
@@ -21,6 +22,8 @@ const roomSlice = createSlice({
     },
   },
 });
+
+
 
 export const { setRoom, addMessageToRoom } = roomSlice.actions;
 export const selectRoom = (state: RootState) => state.room.room;

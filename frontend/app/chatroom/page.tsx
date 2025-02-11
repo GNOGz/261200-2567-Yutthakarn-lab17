@@ -6,6 +6,7 @@ import { useAppSelector } from "@/stores/hook";
 import { selectUser } from "@/stores/slices/userSlice";
 import ChatMessageCard from "@/components/ChatMessage";
 import { selectRoom } from "@/stores/slices/roomSlice";
+import { selectUserNumber } from "@/stores/slices/userNumberSlice";
 import { MessageType } from "@/types/message_type";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +16,7 @@ const ChatRoom: React.FC = () => {
   const [newMessage, setNewMessage] = useState<string>("");
   const user = useAppSelector(selectUser);
   const room = useAppSelector(selectRoom);
+  const userNumber = useAppSelector(selectUserNumber);
   const messages = room?.messages || [];
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +52,7 @@ const ChatRoom: React.FC = () => {
               Chat Room
             </h2>
             <div className="text-xl font-medium text-gray-700">
-              Current user: <span className="text-teal-500 font-semibold">{/*add number of user*/}</span>
+              Current user: <span className="text-teal-500 font-semibold">{userNumber?.userNumber}</span>
             </div>
           </div>
 
