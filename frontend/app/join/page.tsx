@@ -19,7 +19,11 @@ const JoinPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [error, setError] = useState<string>("");
   const userNumber = useAppSelector(selectUserNumber);
+<<<<<<< HEAD
   const displayNum = userNumber?.userNumber || 1;
+=======
+
+>>>>>>> 2a2e9a53793e952c10cc6afe455086d4b686445e
   const onUserConnected = (payload: Stomp.Message) => {
     const userObject = JSON.parse(payload.body);
     console.log("Receive new message user object", userObject);
@@ -67,7 +71,11 @@ const JoinPage: React.FC = () => {
         </h2>
         <h6 className="text-xl text-center text-gray-500 mb-6">
           Current user:{" "}
+<<<<<<< HEAD
           <span className="font-semibold">{displayNum}</span>
+=======
+          <span className="font-semibold">{userNumber?.userNumber}</span>
+>>>>>>> 2a2e9a53793e952c10cc6afe455086d4b686445e
         </h6>
         <p className="text-center text-gray-500 mb-6">
           Please enter your username to continue
